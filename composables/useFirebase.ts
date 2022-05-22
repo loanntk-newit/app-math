@@ -35,16 +35,16 @@ export const signInUser = async (email, password) => {
 
 export const initUser = async () => {
   const auth = getAuth();
+  const firebaseUser = useFirebaseUser();
+  firebaseUser.value = auth.currentUser;
   const credentials = await onAuthStateChanged(auth, (user) => {
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      console.log(user);
+      // Sign in
     } else {
-      // User is signed out
-      // ...
+      // Sign out
     }
+
+    firebaseUser.value = user;
   });
   return credentials;
 };
